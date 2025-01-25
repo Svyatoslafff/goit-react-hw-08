@@ -1,17 +1,4 @@
-$form-width: calc(320px * 3 + 40px * 2);
-
-@mixin shadowed-border(
-    $color: #7a7a7a21,
-    $border: 0.5px solid #7a7a7a20,
-    $radius: 15px
-) {
-    border: $border;
-    border-radius: $radius;
-    box-shadow:
-        2px 2px 5px $color,
-        -2px -2px 5px $color;
-}
-
+@use '/src/variables.scss' as *;
 :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
