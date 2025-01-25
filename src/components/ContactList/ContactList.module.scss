@@ -1,0 +1,13 @@
+@use '/src//index.scss' as *;
+.contactListContainer {
+    .noContactsMessage {
+        font-size: 20px;
+    }
+    .contactList {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+        max-width: $form-width;
+    }
+}

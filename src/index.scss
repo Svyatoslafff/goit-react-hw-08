@@ -1,0 +1,65 @@
+$form-width: calc(320px * 3 + 40px * 2);
+
+@mixin shadowed-border(
+    $color: #7a7a7a21,
+    $border: 0.5px solid #7a7a7a20,
+    $radius: 15px
+) {
+    border: $border;
+    border-radius: $radius;
+    box-shadow:
+        2px 2px 5px $color,
+        -2px -2px 5px $color;
+}
+
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    font-size: 16px;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+h1,
+p {
+    margin: 0;
+}
+
+button {
+    @include shadowed-border($border: 1px solid transparent, $radius: 8px);
+    min-height: 40px;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #4e75ff;
+    color: #f5f4f4;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+button:hover {
+    background-color: #6c8cff;
+}
+button:focus,
+button:focus-visible {
+    outline: 2px auto -webkit-focus-ring-color;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+input {
+    border: 1px solid #808080;
+    border-radius: 4px;
+    width: 272px;
+    height: 40px;
+    padding-left: 15px;
+}

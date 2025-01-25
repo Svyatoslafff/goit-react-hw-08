@@ -1,21 +1,29 @@
 import css from './ContactForm.module.scss';
+import { useId } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useId } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { MdOutlineInfo } from 'react-icons/md';
 
-const phoneNumRegExp =
-    /^(\+?\d{1,3}[-.\s]?)?(\(?\d{2,3}\)?[-.\s]?\d{2,3}[-.\s]?\d{2,4}[-.\s]?\d{2,4})$/;
-const spacesOnStartRegExp = /^[^\s].*$/;
+const toastsSettings = {
+    duration: 3000,
+    icon: <MdOutlineInfo size={20} />,
+    style: {},
+};
+
 const initialValues = {
     name: '',
     number: '',
 };
+const phoneNumRegExp =
+    /^(\+?\d{1,3}[-.\s]?)?(\(?\d{2,3}\)?[-.\s]?\d{2,3}[-.\s]?\d{2,4}[-.\s]?\d{2,4})$/;
+const spacesOnStartRegExp = /^[^\s].*$/;
 const contactsSchema = Yup.object().shape({
     name: Yup.string()
         .required('Required!')
-        .min(2, 'Name must have at least 2 letters!')
         .matches(spacesOnStartRegExp, 'Please clear spaces before the name!')
-        .max(30, "Name can't have more than 30 letters!"),
+        .min(3, 'Name must have at least 3 letters!')
+        .max(50, "Name can't have more than 50 letters!"),
     number: Yup.string()
         .required('Required!')
         .matches(spacesOnStartRegExp, 'Please clear spaces before the number!')
@@ -37,11 +45,11 @@ export default function ContactForm({ onAddContact, contacts }) {
         };
 
         if (duplicateVerify.name) {
-            console.log('This name is already in phonebook');
+            toast('This name is already in phonebook', toastsSettings);
             return;
         }
         if (duplicateVerify.number) {
-            console.log('This number is already in phonebook');
+            toast('This number is already in phonebook', toastsSettings);
             return;
         }
 
@@ -50,33 +58,49 @@ export default function ContactForm({ onAddContact, contacts }) {
     }
 
     return (
-        <div>
+        <div className={css.formContainer}>
             <Formik
                 initialValues={initialValues}
                 onSubmit={handleSubmit}
                 validationSchema={contactsSchema}
             >
-                <Form>
-                    <ul className="list">
+                <Form className={css.contactForm}>
+                    <ul className={css.formList}>
                         <li>
                             <label htmlFor="nameId">Name</label>
                             <Field
                                 name="name"
                                 type="text"
                                 id={nameId}
-                                className={css.input}
+                                className={css.contactInput}
                             />
-                            <ErrorMessage name="name" component={'p'} />
+                            <ErrorMessage
+                                name="name"
+                                component={'p'}
+                                className={css.errorMessage}
+                            />
                         </li>
                         <li>
-                            <label htmlFor="">Phone number</label>
-                            <Field name="number" type="tel" id={numberId} />
-                            <ErrorMessage name="number" component={'p'} />
+                            <label htmlFor="">Number</label>
+                            <Field
+                                name="number"
+                                type="tel"
+                                id={numberId}
+                                className={css.contactInput}
+                            />
+                            <ErrorMessage
+                                name="number"
+                                component={'p'}
+                                className={css.errorMessage}
+                            />
                         </li>
                     </ul>
                     <button type="submit">Add contact</button>
                 </Form>
             </Formik>
+            <div>
+                <Toaster />
+            </div>
         </div>
     );
 }

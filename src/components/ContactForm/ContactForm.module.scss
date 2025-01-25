@@ -1,0 +1,30 @@
+@use '/src/index.scss' as *;
+
+.formContainer {
+    @include shadowed-border;
+    max-width: 340px;
+    width: 100%;
+    padding: 20px;
+    .contactForm {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        .formList {
+            li {
+                &:first-child {
+                    padding-bottom: 15px;
+                }
+                .contactInput {
+                    box-sizing: border-box;
+                    width: 100%;
+                }
+                .errorMessage {
+                    color: #ff3a3a;
+                }
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    }
+}
