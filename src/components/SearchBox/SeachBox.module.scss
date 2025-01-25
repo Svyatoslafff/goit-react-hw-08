@@ -1,8 +1,17 @@
+@use '/src/variables.scss' as *;
 .searchContainer {
+    box-sizing: border-box;
+    max-width: 340px;
+    width: 100%;
+    padding: 20px;
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
     align-items: center;
     p {
         font-size: 18px;
+    }
+    input {
+        width: 100%;
     }
 }
