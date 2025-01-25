@@ -67,7 +67,7 @@ export default function ContactForm({ onAddContact, contacts }) {
                 <Form className={css.contactForm}>
                     <ul className={css.formList}>
                         <li>
-                            <label htmlFor="nameId">Name</label>
+                            <label htmlFor={nameId}>Name</label>
                             <Field
                                 name="name"
                                 type="text"
@@ -81,7 +81,7 @@ export default function ContactForm({ onAddContact, contacts }) {
                             />
                         </li>
                         <li>
-                            <label htmlFor="">Number</label>
+                            <label htmlFor={numberId}>Number</label>
                             <Field
                                 name="number"
                                 type="tel"
