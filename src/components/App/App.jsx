@@ -1,49 +1,34 @@
 import css from './App.module.scss';
-import basicContacts from '/src/contacts.json';
 import ContactForm from '../ContactForm/ContactForm';
 import SearchBox from '../SearchBox/SearchBox';
 import ContactList from '../ContactList/ContactList';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact, deleteContact } from '../../redux/contactsSlice';
+import { changeFilter } from '../../redux/filtersSlice';
 
 function App() {
-    const [contacts, setContacts] = useState(() => {
-        if (localStorage.getItem('contacts') === null) {
-            return basicContacts;
-        } else {
-            return JSON.parse(localStorage.getItem('contacts'));
-        }
-    });
-    const [contactsToShow, setContactsToShow] = useState(contacts);
-    const [filter, setFilter] = useState('');
+    const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (!filter) {
-            setContactsToShow(contacts);
-        } else {
-            setContactsToShow(
-                contacts.filter(contact => {
-                    return contact.name
-                        .toLowerCase()
-                        .includes(filter.toLowerCase());
-                })
-            );
-        }
-    }, [contacts, filter]);
+    const filter = useSelector(state => state.filters.name);
+    const contacts = useSelector(state => state.contacts.items).filter(item =>
+        item.name.toLowerCase().includes(filter.toLowerCase())
+    );
 
     useEffect(() => {
         localStorage.setItem('contacts', JSON.stringify(contacts));
     }, [contacts]);
 
     function onAddContact(newContact) {
-        setContacts([...contacts, newContact]);
+        dispatch(addContact(newContact));
     }
 
     function onFilterContacts(value) {
-        setFilter(value);
+        dispatch(changeFilter(value));
     }
 
     function onDeleteContact(id) {
-        setContacts(contacts.filter(contact => !(contact.id === id)));
+        dispatch(deleteContact(id));
     }
 
     return (
@@ -52,7 +37,7 @@ function App() {
             <ContactForm onAddContact={onAddContact} contacts={contacts} />
             <SearchBox onFilterContacts={onFilterContacts} />
             <ContactList
-                contacts={contactsToShow}
+                contacts={contacts}
                 onDeleteContact={onDeleteContact}
             />
         </div>
