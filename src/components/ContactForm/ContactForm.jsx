@@ -4,6 +4,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdOutlineInfo } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from '../../redux/contactsSlice';
 
 const toastsSettings = {
     duration: 3000,
@@ -30,9 +32,19 @@ const contactsSchema = Yup.object().shape({
         .matches(phoneNumRegExp, 'Invalid phone number!'),
 });
 
-export default function ContactForm({ onAddContact, contacts }) {
+export default function ContactForm() {
+    const dispatch = useDispatch();
     const nameId = useId();
     const numberId = useId();
+
+    const filter = useSelector(state => state.filters.name);
+    const contacts = useSelector(state => state.contacts.items).filter(item =>
+        item.name.toLowerCase().includes(filter.toLowerCase())
+    );
+
+    function onAddContact(newContact) {
+        dispatch(addContact(newContact));
+    }
 
     function handleSubmit(values, action) {
         values.id = crypto.randomUUID();

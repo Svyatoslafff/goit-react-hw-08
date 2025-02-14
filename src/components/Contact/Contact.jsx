@@ -1,4 +1,4 @@
-import css from './ContactItem.module.scss';
+import css from './Contact.module.scss';
 import { FaPhoneAlt } from 'react-icons/fa';
 import { IoPersonSharp } from 'react-icons/io5';
 
