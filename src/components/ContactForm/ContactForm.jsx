@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdOutlineInfo } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../redux/contactsSlice';
+import { addContact } from '../../redux/contactsOps';
 
 const toastsSettings = {
     duration: 3000,

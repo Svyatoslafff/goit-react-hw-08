@@ -4,13 +4,11 @@ import { changeFilter } from '../../redux/filtersSlice';
 export default function SearchBox() {
     const dispatch = useDispatch();
 
-    function onFilterContacts(value) {
+    function handleChange(event) {
+        const value = event.target.value;
         dispatch(changeFilter(value));
     }
 
-    function handleChange(event) {
-        onFilterContacts(event.target.value);
-    }
     return (
         <div className={css.searchContainer}>
             <p>Search:</p>
