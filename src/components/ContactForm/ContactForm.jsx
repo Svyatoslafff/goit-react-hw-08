@@ -5,7 +5,8 @@ import * as Yup from 'yup';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdOutlineInfo } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../redux/contactsOps';
+import { addContactThunk } from '../../redux/contactsOps';
+import { selectContacts } from '../../redux/contactsSlice';
 
 const toastsSettings = {
     duration: 3000,
@@ -37,13 +38,10 @@ export default function ContactForm() {
     const nameId = useId();
     const numberId = useId();
 
-    const filter = useSelector(state => state.filters.name);
-    const contacts = useSelector(state => state.contacts.items).filter(item =>
-        item.name.toLowerCase().includes(filter.toLowerCase())
-    );
+    const contacts = useSelector(selectContacts);
 
     function onAddContact(newContact) {
-        dispatch(addContact(newContact));
+        dispatch(addContactThunk(newContact));
     }
 
     function handleSubmit(values, action) {
