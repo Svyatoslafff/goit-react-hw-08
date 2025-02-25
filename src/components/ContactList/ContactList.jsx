@@ -1,32 +1,43 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Contact from '../Contact/Contact';
 import css from './ContactList.module.scss';
-import { deleteContactThunk } from '../../redux/contactsOps';
-import { selectFilteredContacts } from '../../redux/contactsSlice';
+import {
+    selectFilteredContacts,
+    selectLoading,
+} from '../../redux/contactsSlice';
+import { ThreeDots } from 'react-loader-spinner';
 
 export default function ContactList() {
-    const dispatch = useDispatch();
     const contacts = useSelector(selectFilteredContacts);
-
-    function onDeleteContact(id) {
-        console.log(id);
-
-        dispatch(deleteContactThunk(id));
-    }
+    const isLoading = useSelector(selectLoading);
     return (
         <div className={css.contactListContainer}>
-            {contacts.length === 0 ? (
-                <p className={css.noContactsMessage}>No contacts</p>
+            {!isLoading ? (
+                <>
+                    {contacts.length === 0 ? (
+                        <p className={css.noContactsMessage}>No contacts</p>
+                    ) : (
+                        <ul className={css.contactList}>
+                            {contacts.map(contact => (
+                                <Contact
+                                    contactInfo={contact}
+                                    key={contact.id}
+                                />
+                            ))}
+                        </ul>
+                    )}
+                </>
             ) : (
-                <ul className={css.contactList}>
-                    {contacts.map(contact => (
-                        <Contact
-                            onDeleteContact={onDeleteContact}
-                            contactInfo={contact}
-                            key={contact.id}
-                        />
-                    ))}
-                </ul>
+                <ThreeDots
+                    visible={true}
+                    height="80"
+                    width="80"
+                    color="#4fa94d"
+                    radius="9"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                />
             )}
         </div>
     );

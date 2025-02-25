@@ -5,7 +5,7 @@ import {
     fetchContactsThunk,
 } from './contactsOps';
 
-const initialState = { items: [], loading: false, error: '' };
+const initialState = { items: [], loading: true, error: false };
 
 const slice = createSlice({
     name: 'contacts',
@@ -13,14 +13,9 @@ const slice = createSlice({
     extraReducers: builder => {
         builder
             // fetchContacts
-            .addCase(fetchContactsThunk.pending, state => {
-                state.loading = true;
-            })
             .addCase(fetchContactsThunk.fulfilled, (state, action) => {
                 state.loading = false;
-                state.items = action.payload.map(
-                    item => (item = { ...item, isLoading: false })
-                );
+                state.items = action.payload;
             })
             .addCase(fetchContactsThunk.rejected, (state, action) => {
                 state.loading = false;
@@ -28,33 +23,24 @@ const slice = createSlice({
             })
 
             // addContact
-            .addCase(addContactThunk.pending, state => {
-                state.loading = true;
-            })
+            // .addCase(addContactThunk.pending, state => {
+            //     state.loading = true;
+            // })
             .addCase(addContactThunk.fulfilled, (state, action) => {
-                state.loading = false;
-                state.items.push({ ...action.payload, isLoading: false });
+                state.items.push(action.payload);
             })
             .addCase(addContactThunk.rejected, (state, action) => {
-                state.loading = false;
                 state.error = action.payload;
             })
 
             // deleteContact
-            .addCase(deleteContactThunk.pending, (state, action) => {
-                state.item[action.payload].isLoading = true;
-                console.log('pending');
-            })
             .addCase(deleteContactThunk.fulfilled, (state, action) => {
-                // state.items[action.payload].isLoading = false;
                 state.items = state.items.filter(
                     item => item.id !== action.payload
                 );
             })
             .addCase(deleteContactThunk.rejected, (state, action) => {
-                state.loading = false;
                 state.error = action.payload;
-                console.log(action.payload);
             });
     },
 });

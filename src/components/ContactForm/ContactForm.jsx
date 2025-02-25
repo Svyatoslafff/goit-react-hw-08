@@ -41,7 +41,11 @@ export default function ContactForm() {
     const contacts = useSelector(selectContacts);
 
     function onAddContact(newContact) {
-        dispatch(addContactThunk(newContact));
+        toast.promise(dispatch(addContactThunk(newContact)).unwrap(), {
+            loading: 'loading...',
+            success: 'Success!',
+            error: 'Error!',
+        });
     }
 
     function handleSubmit(values, action) {

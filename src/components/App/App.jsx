@@ -2,11 +2,18 @@ import css from './App.module.scss';
 import ContactForm from '../ContactForm/ContactForm';
 import SearchBox from '../SearchBox/SearchBox';
 import ContactList from '../ContactList/ContactList';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchContactsThunk } from '../../redux/contactsOps';
 import { useEffect } from 'react';
+import ErrorModal from '../ErrorModal/ErrorModal';
+import { selectError } from '../../redux/contactsSlice';
 
 function App() {
+    const error = useSelector(selectError);
+    if (error) {
+        document.querySelector('body').classList.add('error');
+    }
+
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchContactsThunk());
@@ -18,6 +25,7 @@ function App() {
             <ContactForm />
             <SearchBox />
             <ContactList />
+            {error && <ErrorModal />}
         </div>
     );
 }

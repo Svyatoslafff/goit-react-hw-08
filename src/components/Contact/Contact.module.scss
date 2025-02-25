@@ -1,16 +1,33 @@
 @use '/src/variables.scss' as *;
 .contactListItem {
-    div {
+    position: relative;
+    .contactInfoContainer {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: wrap;
         gap: 15px;
         padding: 15px;
-        min-width: 300px;
+        min-width: 150px;
+        width: max-content;
         justify-content: center;
         align-items: center;
 
         @include shadowed-border;
+        &.noContent {
+            color: transparent;
+            button {
+                box-shadow: none;
+                color: transparent;
+                background-color: transparent;
+                pointer-events: none;
+                outline: none;
+                transition: none;
+            }
+        }
+
+        button:hover {
+            background-color: #ff7575;
+        }
 
         .infoList {
             display: flex;
@@ -21,12 +38,35 @@
                 align-items: center;
                 justify-content: flex-start;
                 gap: 10px;
+                .infoElement {
+                    span {
+                        display: none;
+                    }
+                }
             }
         }
+    }
+    .loader {
+        width: max-content;
+        position: absolute;
+        top: calc(50% - 40px);
+        left: calc(50% - 40px);
+    }
+}
 
-        button:hover,
-        button:focus {
-            background-color: #ff7575;
+@media (min-width: 768px) {
+    .contactListItem {
+        .contactInfoContainer {
+            flex-direction: row;
+            .infoList {
+                li {
+                    .infoElement {
+                        span {
+                            display: inline;
+                        }
+                    }
+                }
+            }
         }
     }
 }
