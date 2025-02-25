@@ -46,7 +46,7 @@ const slice = createSlice({
                 console.log('pending');
             })
             .addCase(deleteContactThunk.fulfilled, (state, action) => {
-                state.item[action.payload].isLoading = false;
+                // state.items[action.payload].isLoading = false;
                 state.items = state.items.filter(
                     item => item.id !== action.payload
                 );
