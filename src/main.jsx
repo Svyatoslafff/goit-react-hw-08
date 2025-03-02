@@ -4,12 +4,20 @@ import './index.scss';
 import 'modern-normalize';
 import App from './components/App/App';
 import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import { persistor, store } from './redux/store';
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import { BrowserRouter } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 createRoot(document.getElementById('root')).render(
-    <StrictMode>
+    // <StrictMode>
+    <BrowserRouter>
         <Provider store={store}>
-            <App />
+            <PersistGate persistor={persistor}>
+                <App />
+                <Toaster toastOptions={{ duration: 3000 }} />
+            </PersistGate>
         </Provider>
-    </StrictMode>
+    </BrowserRouter>
+    // </StrictMode>
 );

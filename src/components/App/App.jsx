@@ -1,32 +1,47 @@
-import css from './App.module.scss';
-import ContactForm from '../ContactForm/ContactForm';
-import SearchBox from '../SearchBox/SearchBox';
-import ContactList from '../ContactList/ContactList';
+// import css from './App.module.scss';
+// import ContactForm from '../ContactForm/ContactForm';
+// import SearchBox from '../SearchBox/SearchBox';
+// import ContactList from '../ContactList/ContactList';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchContactsThunk } from '../../redux/contactsOps';
+// import { fetchContactsThunk } from '../../redux/contactsOps';
 import { useEffect } from 'react';
-import ErrorModal from '../ErrorModal/ErrorModal';
-import { selectError } from '../../redux/contactsSlice';
+// import ErrorModal from '../ErrorModal/ErrorModal';
+// import { selectError } from '../../redux/contactsSlice';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import RegisterPage from '../../pages/registerPage/registerPage';
+import ContactsPage from '../../pages/ContactsPage/ContactsPage';
+import LoginPage from '../../pages/Login/loginPage';
+import { selectToken } from '../../redux/authSlice';
+import { refreshUserThunk } from '../../redux/authOps';
+import Header from '../Header/Header';
 
 function App() {
-    const error = useSelector(selectError);
-    if (error) {
-        document.querySelector('body').classList.add('error');
-    }
-
+    const token = useSelector(selectToken);
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchContactsThunk());
-    }, [dispatch]);
+        if (token) {
+            dispatch(refreshUserThunk(token))
+                .unwrap()
+                .catch(() => {
+                    navigate('/login');
+                });
+        } else {
+            navigate('/login');
+        }
+    }, []);
 
     return (
-        <div className={css.phonebookContainer}>
-            <h1>Phonebook</h1>
-            <ContactForm />
-            <SearchBox />
-            <ContactList />
-            {error && <ErrorModal />}
-        </div>
+        <>
+            <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/" element={<Header />}>
+                    <Route index element={<ContactsPage />} />
+                </Route>
+                <Route path="*" element={<RegisterPage />} />
+            </Routes>
+        </>
     );
 }
 

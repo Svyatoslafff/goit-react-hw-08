@@ -10,6 +10,11 @@ const initialState = { items: [], loading: true, error: false };
 const slice = createSlice({
     name: 'contacts',
     initialState,
+    reducers: {
+        clearContacts(state) {
+            state.items = [];
+        },
+    },
     extraReducers: builder => {
         builder
             // fetchContacts
@@ -46,6 +51,7 @@ const slice = createSlice({
 });
 
 export const contactsReducer = slice.reducer;
+export const { clearContacts } = slice.actions;
 
 // selectors
 export const selectFilter = state => state.filters.name;
@@ -56,9 +62,6 @@ export const selectError = state => state.contacts.error;
 export const selectFilteredContacts = createSelector(
     [selectFilter, selectContacts],
     (filter, contacts) => {
-        console.log(filter);
-        console.log(contacts);
-
         return contacts.filter(item =>
             item.name.toLowerCase().includes(filter.toLowerCase())
         );
