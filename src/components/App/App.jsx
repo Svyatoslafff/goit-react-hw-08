@@ -39,7 +39,7 @@ function App() {
                 <Route path="/" element={<Header />}>
                     <Route index element={<ContactsPage />} />
                 </Route>
-                <Route path="*" element={<RegisterPage />} />
+                {/* <Route path="*" element={<ErrorPage />} /> */}
             </Routes>
         </>
     );

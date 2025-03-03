@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../redux/authSlice';
 import { Link, Outlet } from 'react-router-dom';
 import { logoutThunk } from '../../redux/authOps';
+import { clearContacts } from '../../redux/contactsSlice';
 
 export default function Header() {
     const username = useSelector(selectUser).name;
     const dispatch = useDispatch();
     function handleClick() {
         dispatch(logoutThunk());
+        dispatch(clearContacts());
     }
     return (
         <>
