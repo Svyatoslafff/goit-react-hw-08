@@ -1,9 +1,10 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {
     addContactThunk,
     deleteContactThunk,
     fetchContactsThunk,
-} from './contactsOps';
+} from './operations';
+import { logoutThunk } from '../auth/operations';
 
 const initialState = { items: [], loading: true, error: false };
 
@@ -21,11 +22,9 @@ const slice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             })
+            .addCase(logoutThunk.fulfilled, () => initialState)
 
             // addContact
-            // .addCase(addContactThunk.pending, state => {
-            //     state.loading = true;
-            // })
             .addCase(addContactThunk.fulfilled, (state, action) => {
                 state.items.push(action.payload);
             })
@@ -46,21 +45,3 @@ const slice = createSlice({
 });
 
 export const contactsReducer = slice.reducer;
-
-// selectors
-export const selectFilter = state => state.filters.name;
-export const selectContacts = state => state.contacts.items;
-export const selectLoading = state => state.contacts.loading;
-export const selectError = state => state.contacts.error;
-
-export const selectFilteredContacts = createSelector(
-    [selectFilter, selectContacts],
-    (filter, contacts) => {
-        console.log(filter);
-        console.log(contacts);
-
-        return contacts.filter(item =>
-            item.name.toLowerCase().includes(filter.toLowerCase())
-        );
-    }
-);

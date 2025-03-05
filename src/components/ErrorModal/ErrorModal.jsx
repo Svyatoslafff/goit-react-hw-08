@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import css from './ErrorModal.module.scss';
-import { selectError } from '../../redux/contactsSlice';
 import { AiOutlineReload } from 'react-icons/ai';
+import { selectError } from '../../redux/contacts/selectors';
 
 export default function ErrorModal() {
     const error = useSelector(selectError);

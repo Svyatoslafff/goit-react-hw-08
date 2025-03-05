@@ -5,9 +5,9 @@ import { IoPersonSharp } from 'react-icons/io5';
 // import { selectLoading } from '../../redux/contactsSlice';
 import { ThreeDots } from 'react-loader-spinner';
 import { useDispatch } from 'react-redux';
-import { deleteContactThunk } from '../../redux/contactsOps';
 import { useState } from 'react';
 import clsx from 'clsx';
+import { deleteContactThunk } from '../../redux/contacts/operations';
 
 export default function ContactItem({ contactInfo: { name, number, id } }) {
     const dispatch = useDispatch();

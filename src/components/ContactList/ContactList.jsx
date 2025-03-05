@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
 import Contact from '../Contact/Contact';
 import css from './ContactList.module.scss';
+import { ThreeDots } from 'react-loader-spinner';
 import {
     selectFilteredContacts,
     selectLoading,
-} from '../../redux/contactsSlice';
-import { ThreeDots } from 'react-loader-spinner';
+} from '../../redux/contacts/selectors';
 
 export default function ContactList() {
     const contacts = useSelector(selectFilteredContacts);
