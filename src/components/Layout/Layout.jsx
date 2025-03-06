@@ -1,43 +1,52 @@
+import { Route, Routes } from 'react-router-dom';
+import AppBar from '../AppBar/AppBar';
+import HomePage from '../../pages/HomePage/HomePage';
+import ContactsPage from '../../pages/ContactsPage/ContactsPage';
+import LoginPage from '../../pages/LoginPage/LoginPage';
+import RegisterPage from '../../pages/RegistrationPage/RegistrationPage';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { selectLoggedIn, selectUserName } from '../../redux/auth/selectors';
-import { logoutThunk } from '../../redux/auth/operations';
+import { selectIsRefreshing, selectToken } from '../../redux/auth/selectors';
+import { refreshUserThunk } from '../../redux/auth/operations';
+import PrivateRoute from '../../routes/PrivateRoute';
+import RestrictedRoute from '../../routes/RestrictedRoute';
+import ErrorModal from '../../pages/ErrorModal/ErrorModal';
 
-export default function Layout() {
-    const isLoggedIn = useSelector(selectLoggedIn);
-    const username = useSelector(selectUserName);
+function Layout() {
+    const token = useSelector(selectToken);
+    const isRefreshing = useSelector(selectIsRefreshing);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
-    function handleClick() {
-        dispatch(logoutThunk())
-            .unwrap()
-            .then(() => {
-                navigate('/login');
-            });
-    }
-    return (
-        <>
-            <header>
-                <Link to="/">Home</Link>
-                {isLoggedIn ? (
-                    <>
-                        <Link to="/contacts">Contacts</Link>
-                        <div>
-                            {/* <p>Welcome {username}</p> */}
-                            <button onClick={handleClick}>Logout</button>
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        <Link to="/register">Register</Link>
-                        <Link to="/login">Login</Link>
-                    </>
-                )}
-            </header>
-            <main>
-                <Outlet />
-            </main>
-        </>
+    useEffect(() => {
+        if (token) {
+            dispatch(refreshUserThunk(token));
+        }
+    }, []);
+
+    return isRefreshing ? null : (
+        <Routes>
+            <Route path="/" element={<AppBar />}>
+                <Route index element={<HomePage />} />
+                <Route
+                    path="contacts"
+                    element={
+                        <PrivateRoute>
+                            <ContactsPage />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="register"
+                    element={<RestrictedRoute component={<RegisterPage />} />}
+                />
+                <Route
+                    path="login"
+                    element={<RestrictedRoute component={<LoginPage />} />}
+                />
+                <Route path="*" element={<ErrorModal />} />
+            </Route>
+        </Routes>
     );
 }
+
+export default Layout;

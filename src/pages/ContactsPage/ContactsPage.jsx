@@ -5,7 +5,7 @@ import ContactForm from '../../components/ContactForm/ContactForm';
 import SearchBox from '../../components/SearchBox/SearchBox';
 import ContactList from '../../components/ContactList/ContactList';
 import { fetchContactsThunk } from '../../redux/contacts/operations';
-import ErrorModal from '../../components/ErrorModal/ErrorModal';
+import ErrorModal from '../ErrorModal/ErrorModal';
 import { selectError } from '../../redux/contacts/selectors';
 
 export default function ContactsPage() {
