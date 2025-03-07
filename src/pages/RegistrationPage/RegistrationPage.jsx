@@ -2,6 +2,7 @@ import { Field, Form, Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { registerThunk } from '../../redux/auth/operations';
 import { Link, useNavigate } from 'react-router-dom';
+import css from './RegistrationPage.module.scss';
 
 const initialValues = {
     name: '',
@@ -22,11 +23,11 @@ export default function RegisterPage() {
         action.resetForm();
     }
     return (
-        <section>
+        <section className={css.regSection}>
             <h2>Register</h2>
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                 <Form>
-                    <ul>
+                    <ul className={css.fieldsList}>
                         <li>
                             <label>
                                 Name
@@ -46,11 +47,16 @@ export default function RegisterPage() {
                             </label>
                         </li>
                     </ul>
-                    <button type="submit">Register</button>
+                    <button type="submit" className={css.submitButton}>
+                        Register
+                    </button>
                 </Form>
             </Formik>
             <p>
-                If you already have account, <Link to="/login">Login</Link>
+                If you already have account,{' '}
+                <Link to="/login" className={css.loginLink}>
+                    Login
+                </Link>
             </p>
         </section>
     );

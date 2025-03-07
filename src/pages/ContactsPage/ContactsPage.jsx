@@ -21,7 +21,7 @@ export default function ContactsPage() {
 
     return (
         <div className={css.phonebookContainer}>
-            <h1>Phonebook</h1>
+            <h2>Contacts</h2>
             <ContactForm />
             <SearchBox />
             <ContactList />
