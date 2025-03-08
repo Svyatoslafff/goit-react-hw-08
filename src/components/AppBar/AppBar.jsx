@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-import { Outlet } from 'react-router-dom';
 import { selectLoggedIn } from '../../redux/auth/selectors';
 import Navigation from '../Navigation/Navigation';
 import UserMenu from '../UserMenu/UserMenu';
@@ -15,20 +14,15 @@ export default function AppBar() {
 
     return (
         <>
-            <header className={css.headerContainer}>
-                <Navigation buildClasses={buildClasses} />
-                <div className={css.titleContainer}>
-                    <h1>Phonebook</h1>
-                </div>
-                {isLoggedIn ? (
-                    <UserMenu />
-                ) : (
-                    <AuthNav buildClasses={buildClasses} />
-                )}
-            </header>
-            <main>
-                <Outlet />
-            </main>
+            <Navigation buildClasses={buildClasses} />
+            <div className={css.titleContainer}>
+                <h1>Phonebook</h1>
+            </div>
+            {isLoggedIn ? (
+                <UserMenu />
+            ) : (
+                <AuthNav buildClasses={buildClasses} />
+            )}
         </>
     );
 }

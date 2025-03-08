@@ -1,67 +1,53 @@
 @use '/src/variables.scss' as *;
 
-.headerContainer {
-    background-color: #fff;
-    min-width: 400px;
-    width: 70vw;
-    padding: 20px 40px;
+.link {
+    color: #292929;
+    padding: 5px;
+    height: 36px;
     display: flex;
-    justify-content: space-between;
-    position: fixed;
-    top: 10px;
-    left: calc(50% - 35vw);
-
-    @include shadowed-border;
-
-    .link {
-        color: #292929;
-        padding: 5px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        transition: all 250ms ease-in-out;
-        border-color: transparent;
-        // position: relative;
-        // &::after {
-        //     content: '';
-        //     position: absolute;
-        //     bottom: 0;
-        //     left: 0;
-        //     width: 0;
-        //     height: 1px;
-        //     background-color: #000;
-        //     max-width: max-content;
-        //     transition: width 250ms ease-in-out;
-        // }
-        // &:hover,
-        // &:focus {
-        //     &::after {
-        //         width: max-content;
-        //     }
-        // }
-        &.notActiveLink {
-            border: 0.5px solid transparent;
-            &:focus,
-            &:hover {
-                @include shadowed-border($radius: 5px);
-            }
-        }
-
-        &.activeLink {
-            background-color: #f0f0f0;
+    align-items: center;
+    transition: all 250ms ease-in-out;
+    border-color: transparent;
+    // position: relative;
+    // &::after {
+    //     content: '';
+    //     position: absolute;
+    //     bottom: 0;
+    //     left: 0;
+    //     width: 0;
+    //     height: 1px;
+    //     background-color: #000;
+    //     max-width: max-content;
+    //     transition: width 250ms ease-in-out;
+    // }
+    // &:hover,
+    // &:focus {
+    //     &::after {
+    //         width: max-content;
+    //     }
+    // }
+    &.notActiveLink {
+        border: 0.5px solid transparent;
+        &:focus,
+        &:hover {
             @include shadowed-border($radius: 5px);
-
-            &:hover {
-                background-color: #e6e6e6;
-            }
         }
     }
 
-    .titleContainer {
-        h1 {
-            position: absolute;
-            top: calc(50% - 24px);
-            left: calc(50% - 86px);
+    &.activeLink {
+        background-color: #f0f0f0;
+        @include shadowed-border($radius: 5px);
+
+        &:hover {
+            background-color: #e6e6e6;
         }
+    }
+}
+
+.titleContainer {
+    h1 {
+        position: absolute;
+        top: calc(50% - 24px);
+        left: calc(50% - 86px);
     }
 }

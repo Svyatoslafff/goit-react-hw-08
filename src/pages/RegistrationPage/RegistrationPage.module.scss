@@ -10,22 +10,6 @@
     gap: 20px;
     background-color: #fff;
     @include shadowed-border;
-    .fieldsList {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 15px;
-        padding-bottom: 15px;
-        li {
-            label {
-                display: flex;
-                flex-direction: column;
-            }
-        }
-    }
-    .submitButton {
-        width: 100%;
-    }
     .loginLink {
         color: #3c60ff;
         text-decoration: underline;

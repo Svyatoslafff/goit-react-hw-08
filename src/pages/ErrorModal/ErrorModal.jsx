@@ -9,7 +9,6 @@ import clsx from 'clsx';
 export default function ErrorModal() {
     const navigate = useNavigate();
     let error = useSelector(selectError);
-    console.log(error);
 
     if (!error) {
         error = { message: 'Page not found!' };

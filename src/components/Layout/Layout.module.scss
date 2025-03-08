@@ -1,0 +1,15 @@
+@use '/src/variables.scss' as *;
+
+.headerContainer {
+    background-color: #fff;
+    min-width: 400px;
+    width: 70vw;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    top: 10px;
+    left: calc(50% - 35vw);
+
+    @include shadowed-border;
+}

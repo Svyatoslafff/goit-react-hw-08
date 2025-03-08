@@ -6,7 +6,6 @@ import css from './UserMenu.module.scss';
 
 export default function UserMenu() {
     const username = useSelector(selectUserName);
-    console.log(username);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
